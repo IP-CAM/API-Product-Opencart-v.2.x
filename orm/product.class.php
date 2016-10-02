@@ -6,8 +6,8 @@
  * Time: 14:01
  */
 class Product extends DB{
-    public $product_id=3;
-    public $model='novii-pokemon-002';
+    public $product_id=0;
+    public $model='';
     public $sku='super-art-0002';
     public $upc='';
     public $ean='';
@@ -23,7 +23,7 @@ class Product extends DB{
     public $price=0.0000;
     public $points=0;
     public $tax_class_id=0;
-    public $date_available='2016-09-13';
+    public $date_available='0000-00-00';
     public $weight=0.00000000;
     public $weight_class_id=1;
     public $length=0.00000000;
@@ -34,7 +34,7 @@ class Product extends DB{
     public $minimum=1;
     public $sort_order=1;
     public $status=1;
-    public $date_added = '2016-09-14 10:01:44';
+    public $date_added = '0000-00-00 00:00:00';
     public $date_modified='0000-00-00 00:00:00';
     public $viewed=0;
 
@@ -79,7 +79,7 @@ class Product extends DB{
             viewed
         ) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s',%d,%d,'%s',%d,%d,%01.4f,%d,%d,'%s',%01.8f,%d,%01.8f,%01.8f,%01.8f,%d,%d,%d,%d,%d,'%s','%s',%d);",
             $this->model,
-            $this->sku,
+            $this->escape($this->sku),
             $this->upc,
             $this->ean,
             $this->jan,
@@ -91,7 +91,7 @@ class Product extends DB{
             $this->image,
             $this->manufacturer_id,
             $this->shipping,
-            $this->price,
+            $this->escape($this->price),
             $this->points,
             $this->tax_class_id,
             $this->date_available,
@@ -110,6 +110,25 @@ class Product extends DB{
             $this->viewed
         );
         $this->query($q);
+        $this->product_id = mysqli_insert_id($this->db);
+    }
+
+    public function update()
+    {
+        $this->price = $this->escape($this->price);
+		$this->model = $this->escape($this->model);
+        $q = "UPDATE ".$this->table." SET date_modified='".$this->date_modified."', price=".$this->price.", model='".$this->model."' WHERE product_id=".$this->product_id.";";
+        $this->query($q);
+    }
+
+    public function getProductIdBySku(){
+        $q = "SELECT product_id FROM ".$this->table." WHERE sku='".$this->sku."'";
+        $res = $this->query($q);
+        if($res->num_rows){
+            $row = $res->fetch_assoc();
+            return $row['product_id'];
+        }
+        return 0;
     }
 }
 

@@ -7,7 +7,7 @@
  */
 class Url_alias extends DB{
     public $url_alias_id=864;
-    public $query  ='product_id=3';
+    public $query  ='product_id=0';
     public $keyword='novij-pokemon';
     public $seomanager=0;
 
@@ -25,7 +25,7 @@ class Url_alias extends DB{
             seomanager
         ) VALUES ('%s','%s',%d);",
             $this->query,
-            $this->keyword,
+            $this->escape($this->keyword),
             $this->seomanager
         );
         $this->query($q);

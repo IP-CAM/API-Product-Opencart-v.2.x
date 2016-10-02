@@ -6,7 +6,7 @@
  * Time: 14:03
  */
 class Product_to_store extends DB{
-    public $product_id=3;
+    public $product_id=0;
     public $store_id=0;
 
     public $table = 'product_to_store';

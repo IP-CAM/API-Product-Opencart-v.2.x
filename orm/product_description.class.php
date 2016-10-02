@@ -8,7 +8,7 @@
 
 class Product_description extends DB{
 
-    public $product_id=3;
+    public $product_id=0;
     public $language_id=1;
     public $name='Новый покемон';
     public $description='&lt;p&gt;Основное описание - новый покемон&lt;/p&gt;\r\n';
@@ -43,9 +43,9 @@ class Product_description extends DB{
         ) VALUES (%d, %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s);",
             $this->product_id,
             $this->language_id,
-            $this->name,
-            $this->description,
-            $this->description_mini,
+            $this->escape($this->name),
+            $this->escape($this->description),
+            $this->escape($this->description_mini),
             $this->meta_description,
             $this->meta_keyword,
             $this->seo_title,
@@ -53,6 +53,15 @@ class Product_description extends DB{
             $this->tag,
             $this->meta_title
         );
+        $this->query($q);
+    }
+
+    public function update()
+    {
+        $this->escape($this->name);
+        $this->escape($this->description);
+        $this->escape($this->description_mini);
+        $q = "UPDATE ".$this->table." SET name='".$this->name."', description='".$this->description."', description_mini='".$this->description_mini."' WHERE product_id=".$this->product_id.";";
         $this->query($q);
     }
 }

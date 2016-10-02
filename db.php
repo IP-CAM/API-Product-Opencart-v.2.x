@@ -28,10 +28,10 @@ class DbSingleton {
         }
         $this->_link = new mysqli($db_host, $db_user, $db_pass, $db_name);
         if(mysqli_connect_error()) {
-            throw new Exception("Mysql connect failure: (" . $this->_link->errno . ") " . $this->_link->error);
+            throw new MyException("Mysql connect failure: (" . $this->_link->errno . ") " . $this->_link->error);
         }
         if (!$this->_link->set_charset("utf8")) {
-            throw new Exception("Error setup utf8: %s\n", $this->_link->error);
+            throw new MyException("Error setup utf8: %s\n", $this->_link->error);
         }
     }
     public function getConnection() {
@@ -47,7 +47,7 @@ class DB{
     function query($q){
         $res = $this->db->query($q);
         if(!$res){
-            throw new Exception("Mysql query failure: [".$q."] (" . $this->db->errno . ") " . $this->db->error);
+            throw new MyException("Mysql query failure: [".$q."] (" . $this->db->errno . ") " . $this->db->error);
         }
         return $res;
     }

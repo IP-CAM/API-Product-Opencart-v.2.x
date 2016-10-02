@@ -8,7 +8,6 @@
 
 define('PATH_TO_ROOT_OPENCART_SCRIPT', '/vagrant/web/');
 
-
 // if set IS_USE_MY_DB_SETTINGS script will get db setting here,
 // if no set, settings will import from opencart confing.php file
 define('IS_USE_MY_DB_SETTINGS', 1);
